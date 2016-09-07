@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/esri.css">
+		<link rel='stylesheet' href="css/editor.css" />
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script src="revealeditor.js"></script>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<style>
+			header {
+				background: #fff;
+				padding: 0.5em 2.5em;
+			}
+			header a {
+				font-size: 1em;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<a class="btn">Run Code!</a>
+		</header>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background='img/bg-1.png' data-background-size='cover'>
+					<br /><br />
+					<h1>Intro to Functional Programming with JavaScript</h1>
+					<p>Ben Stoltz</p>
+				</section>
+
+				<section data-background='img/bg-1.png' data-background-size='cover'>
+					<section>
+						<h2>First some es2015 syntax that might differ from what you're used to!</h2>
+					</section>
+					<section>
+						<h2>Variable Declarations</h2>
+						<p>`const` creates a constant that cannot be redefined.</p>
+						<p>`let` can be redefined.</p>
+						<p>Both `const` and `let` are block scoped instead of simply being function scoped.</p>
+						<p>
+							They are not hoisted (Very important if you are aware of variable hoisting)
+						</p>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+const book = 'The Lord of the Rings';
+let title = 'The Sound of Music';
+for (let i = 0; i < 10; i++) {
+	console.log(i);
+}
+console.log(i); // Much error!
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Arrow Functions</h2>
+						<br />
+						<p>
+							Shorter, more terse syntax. Lexically binds `this` (No more need for `var self = this;`)
+						</p>
+						<p>
+							Always anonymous. Best suited to non-method functions and cannot be used as constructors
+						</p>
+						<pre><code class='hljs js' data-trim contenteditable>
+const multiply = (x, y) => x * y;
+console.log(multiply(2, 3));
+						</code></pre>
+						<aside class='notes'>
+							`this` is bound to the enclosing scope.
+							Issues can occur when this changes dynamically
+						</aside>
+					</section>
+				</section>
+
+				<section data-background='img/bg-1.png' data-background-size='cover'>
+					<section>
+						<h2>Why Functional Programming?</h2>
+					</section>
+					<section>
+						<ul>
+							<li>
+								Manage Complexity (simplicity)
+							</li>
+							<li>
+								Reliability
+							</li>
+							<li>
+								Testability
+							</li>
+						</ul>
+						<aside class='notes'>
+							* Complexity is managed by breaking functions down into understandable pieces
+							* Reliablity comes frome very predictable pure functions
+							* testability comes from Idempotence and the prior two
+						</aside>
+					</section>
+				</section>
+
+				<section data-background='img/bg-1.png' data-background-size='cover'>
+					<section>
+						<h2>Why JavaScript as a functional programming language?</h2>
+					</section>
+					<section>
+						<h2>First Class Functions</h2>
+						<p>
+							Treat functions like any object.
+						</p>
+						<p>
+							Functions can be assigned to variables, passed to other functions, have methods attached.
+						</p>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+let double = x => {
+	return x * 2;
+};
+double.sing = () => console.log('This is me singing!');
+double.sing();
+const doubledArray = [1, 2, 3, 4, 5, 6].map(double);
+console.log(doubledArray);
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h2>Closures</h2>
+					</section>
+				</section>
+				<section>
+					<section>
+						blah blah
+					</section>
+					<section>
+						Noooooooooooo
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script src="src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progres: true,
+				history: true,
+				center: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+			$('.btn').RevealEditor();
+		</script>
+	</body>
+</html>
