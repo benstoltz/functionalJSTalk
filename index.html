@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/lodash/4.16.1/lodash.min.js"></script>
 		<script src="revealeditor.js"></script>
 
 		<!-- Printing and PDF exports -->
@@ -273,6 +274,149 @@ console.log(ukDrinkingAge(19));
 							You can call a function with fewer arguments than it expects.
 							It returns a function that takes the remaining arguments
 						</blockquote>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+function add(x) {
+	return function(y) {
+		return x + y;
+	};
+};
+const increment = add(1);
+const addTen = add(10);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Some more glorious currying...</h2>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+const match = _.curry((what, str) => {
+	return str.match(what);
+});
+
+match(/\s+/g, 'hello world');
+
+match(/\s+/g)('hello world');
+
+const hasSpaces = match(/\s+/g);
+
+hasSpaces('hello world');
+
+hasSpaces('spaceless');
+							</code>
+						</pre>
+					</section>
+				</section>
+				<section data-background='img/bg-1.png' data-background-size='cover'>
+					<section>
+						<h2>Functional Composition</h2>
+					</section>
+					<section>
+						<h2>The humble Compose function</h2>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+const compose = (f, g) => {
+	return (x) => {
+		return f(g(x));
+	};
+};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p>
+							With which we can do things like....
+						</p>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+const compose = (f, g) => {
+	return (x) => {
+		return f(g(x));
+	};
+};
+
+const toUpperCase = (x) => { return x.toUpperCase(); };
+const exclaim = (x) => { return `${x}!`; };
+const shout = compose(exclaim, toUpperCase);
+
+console.log(shout('send in the clowns'));
+							</code>
+						</pre>
+					</section>
+				</section>
+				<section data-background='img/bg-1.png' data-background-size='cover'>
+					<section>
+						<h2>Where to go from here?</h2>
+					</section>
+					<section>
+						<ul>
+							<li>
+								Pointfree - functions that never mention the data they operate on
+							</li>
+							<li>
+								Associative Composition - Composition where it doesn't care how many functions are passed in
+							</li>
+							<li>
+								Functor - Type that implements map() and obeys some laws
+							</li>
+							<li>
+								Monad - Pointed functors that can flatten
+							</li>
+							<li>
+								The list goes on.......
+							</li>
+						</ul>
+					</section>
+				</section>
+				<section data-background='img/bg-1.png' data-background-size='cover'>
+					<section>
+						<h2>Let's play with some code and make it functional!</h2>
+					</section>
+					<section>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+const Flock = function(n) {
+	this.seagulls = n;
+};
+
+Flock.prototype.conjoin = function(other) {
+  this.seagulls += other.seagulls;
+  return this;
+};
+
+Flock.prototype.breed = function(other) {
+  this.seagulls = this.seagulls * other.seagulls;
+  return this;
+};
+
+let flock_a = new Flock(4);
+let flock_b = new Flock(2);
+let flock_c = new Flock(0);
+
+let result = flock_a.conjoin(flock_c)
+    .breed(flock_b)
+		.conjoin(flock_a.breed(flock_b))
+		.seagulls;
+console.log(result);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+const add = (x, y) => { return x + y; };
+const multiply = (x, y) => { return x * y; };
+
+let flock_a = 4;
+let flock_b = 2;
+let flock_c = 0;
+
+let result = add(
+	multiply(flock_b, add(flock_a, flock_c)),
+	multiply(flock_a, flock_b));
+console.log(result);
+							</code>
+						</pre>
 					</section>
 				</section>
 			</div>

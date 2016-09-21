@@ -15,8 +15,6 @@
 
 ## Pure functions
 
-## Immutability
-
 ## Currying
 
 ## Functional Composition
