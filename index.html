@@ -92,6 +92,39 @@ console.log(multiply(2, 3));
 
 				<section data-background='img/bg-1.png' data-background-size='cover'>
 					<section>
+						<h2>What is Functional Programming?</h2>
+					</section>
+					<section>
+						<blockquote>
+							In computer science, function composition (not to be confused with object composition) is an act or mechanism to combine simple functions to build more complicated ones. Like the usual composition of functions in mathematics, the result of each function is passed as the argument of the next, and the result of the last one is the result of the whole.
+						</blockquote>
+					</section>
+					<section>
+						<p>
+							Functions must be stateless and data must be immutable.
+						</p>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+const sampleArr = [1, 2, 3, 4, 5];
+
+const map = (f, ary) => {
+	return ary.map(f);
+};
+const multiplyByNumber = (x) => {
+	return (y) => {
+		return x * y;
+	};
+};
+const doubleItem = multiplyByNumber(2);
+const finalArr = map(doubleItem, sampleArr);
+console.log(finalArr);
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section data-background='img/bg-1.png' data-background-size='cover'>
+					<section>
 						<h2>Why Functional Programming?</h2>
 					</section>
 					<section>
@@ -141,14 +174,105 @@ console.log(doubledArray);
 
 					<section>
 						<h2>Closures</h2>
+						<p>
+							Encapsulate logic.
+							Partial applications (currying).
+							Private methods.
+						</p>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+const addByNumber = (x) => { return (y) => { return x + y; }};
+let addTen = addByNumber(10);
+console.log(addTen(10));
+
+const counter = (function() {
+	let privateCounter = 0;
+	function changeBy(val) {
+		return privateCounter += val;
+	}
+	return {
+		incrementBy: function(num = 1) {
+			changeBy(num);
+		},
+		decrementBy: function(num = -1) {
+			changeBy(num);
+		},
+		value: function() {
+			return privateCounter;
+		}
+	};
+})();
+							</code>
+						</pre>
 					</section>
 				</section>
-				<section>
+				<section data-background='img/bg-1.png' data-background-size='cover'>
 					<section>
-						blah blah
+						<h2>Pure Functions</h2>
 					</section>
 					<section>
-						Noooooooooooo
+						<blockquote>
+							A pure function is a function that, given the same input,
+							will always return the same output and does not have any observable side effects.
+						</blockquote>
+					</section>
+					<section>
+						<h2>Impure</h2>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+let xs = [1,2,3,4,5];
+xs.splice(0, 3);
+xs.splice(0, 3);
+xs.splice(0, 3);
+console.log(xs);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Pure!</h2>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+let xs = [1,2,3,4,5];
+xs.slice(0, 3);
+xs.slice(0, 3);
+xs.slice(0, 3);
+console.log(xs);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Another example of Pure/Impure</h2>
+						<pre>
+							<code class='hljs js' data-trim contenteditable>
+const minAge = 21;
+
+const checkAge = (age) => {
+	return age >= minAge;
+};
+
+const checkAgePure = (age) => {
+	const minimum = 21;
+	return age >= minimum;
+};
+
+const checkAgeBest = (min) => { return (age) => { return age >= min; }};
+const usDrinkingAge = checkAgeBest(21);
+const ukDrinkingAge = checkAgeBest(18);
+console.log(usDrinkingAge(15));
+console.log(ukDrinkingAge(19));
+							</code>
+						</pre>
+					</section>
+				</section>
+				<section data-background='img/bg-1.png' data-background-size='cover'>
+					<section>
+						<h2>Currying</h2>
+					</section>
+					<section>
+						<blockquote>
+							You can call a function with fewer arguments than it expects.
+							It returns a function that takes the remaining arguments
+						</blockquote>
 					</section>
 				</section>
 			</div>
